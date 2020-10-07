@@ -1,0 +1,23 @@
+
+.bg-color{
+  background-color: #0f4784;
+}
+.img-style{
+  cursor: pointer; 
+  width: 30%;
+  height: 30%;
+  margin: 0px 17px 0px 0px;
+}
+.row-sty{
+  display: flex;
+}
+.live__scroll {
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+}
+
+
+
+
+
