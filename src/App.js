@@ -7,7 +7,7 @@ import {
 } from "react-router-dom";
 import ShowsDeshboard from "./app/components/ShowsDeshboard"; 
 import ShowDetails from "./app/components/ShowDetails"; 
-import  SearchShow from "./app/components/ShowDetails"
+import  SearchShow from "./app/components/SearchShow"
 
 function App() {
   return (
