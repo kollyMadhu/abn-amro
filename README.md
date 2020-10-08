@@ -1,16 +1,54 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# ABN_AMRO
+ABN_AMRO is a Application for dealing with TV Shows.
 
+Create React apps with no build configuration.
+
+Creating an App – How to create a new app.
+User Guide – How to develop apps bootstrapped with Create React App.
+Create React App works on  Windows, and Linux
+
+Quick Overview
 ## Available Scripts
+
+# npx create-react-app my-app
+# cd my-app
 
 In the project directory, you can run:
 
-### `npm start`
+# npm start
+
+If you've previously installed create-react-app globally via npm install -g create-react-app, we recommend you uninstall the package using npm uninstall -g create-react-app or yarn global remove create-react-app to ensure that npx always uses the latest version.
 
 Runs the app in the development mode.<br />
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 The page will reload if you make edits.<br />
 You will also see any lint errors in the console.
+
+project structure
+
+ABN_AMRO
+├── README.md
+├── node_modules
+├── package.json
+├── .gitignore
+|--- package-lock.json
+├── public│
+│   ├── index.html
+│   
+└── src
+    ├── app -------|--action-------|---middleware
+    ├── styles     |--component
+    ├── test       |--reducer       
+    ├── index.css
+    └── App.js
+    └── index.js
+
+    For the project to build, these files must exist with exact filenames:
+
+public/index.html is the page template;
+src/index.js is the JavaScript entry point.
+
 
 ### `npm test`
 
