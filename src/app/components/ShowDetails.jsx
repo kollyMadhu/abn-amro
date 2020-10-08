@@ -4,24 +4,20 @@ import { connect } from "react-redux";
 import { mapStateToProps } from "../reducers/index";
 import * as middleware from "../action/middleware/showsDeshboardMiddleware";
 
-import SearchShow from "./SearchShow";
-
 class Showdetails extends Component {
   constructor(props) {
     super(props);
     this.state = {
       showID:
-        props.history.location &&
-        props.history.location.search 
+        props.history.location && props.history.location.search
           ? props.history.location.search
           : null,
-        /*   const getUser = s => s.includes('?') && s.substr(s.lastIndexOf('?') + 1).split(' ')[0] */
+      /*   const getUser = s => s.includes('?') && s.substr(s.lastIndexOf('?') + 1).split(' ')[0] */
       showDetails: {},
       genresVal: "",
       sheduleDate: "",
-      searchArray: ''
+      searchArray: "",
     };
-    const getUser = s => s.includes('?') && s.substr(s.lastIndexOf('?') + 1).split(' ')[0]
   }
 
   static getDerivedStateFromProps(nextProps, state) {
@@ -41,57 +37,34 @@ class Showdetails extends Component {
         });
         state.genresVal = arrayVal;
       }
-      
     }
-    if (
-      nextProps &&
-      nextProps.searchShowReducer &&
-      nextProps.searchShowReducer.searchShowDetail
-    ) {
-      state.searchArray = nextProps.searchShowReducer.searchShowDetail;
-    }
+    return {}
   }
 
   componentDidMount() {
-    let showIDVal = this.state.showID.includes('?') ? this.state.showID.split('?'):null;
-    showIDVal = showIDVal[1];
-    this.props.dispatch(middleware.getShowsDetails(showIDVal));
+    let showIDVal =
+      this.state.showID && this.state.showID.includes("?")
+        ? this.state.showID.split("?")
+        : null;
+    showIDVal = showIDVal ? showIDVal[1] : "";
+    if (showIDVal) this.props.dispatch(middleware.getShowsDetails(showIDVal));
   }
 
-  /*   componentDidUpdate(prevProps, prevState, snapshot) { if (prevState.name !== this.state.name) { this.handler() } }
+  goBack = () => {
+    this.props.history.goBack();
+  };
 
-    componentWillUnmount() {
-        
-    }
-
-    
-    handleEvent() {}
-
-   
-    handler = () => { this.setState() } */
-    goBack = () => {
-      this.props.history.goBack()
-    }
-    handleButtonClick = (event) => {
-      this.props.dispatch(middleware.getSearchShow(event));
-    };
-    handleHomePage = ()=>{
-      this.setState({
-        searchArray: ''
-      })
-    }
   render() {
     return (
       <div>
-        <Header handleClick={(e) => this.handleButtonClick(e)} handleHomePage={this.handleHomePage}/>
-        
-        {this.state.searchArray ? (
-         <SearchShow searchResult={this.state.searchArray} />
-        ) : this.state.showDetails ? (
-          
-          <div class="jumbotron">
-             <br />
-            <button onClick={this.goBack}  type="submit">Go Back</button>
+        <Header />
+
+        {this.state.showDetails ? (
+          <div className="jumbotron">
+            <br />
+            <button onClick={this.goBack} type="submit">
+              Go Back
+            </button>
             <br /> <br />
             <div className="container">
               <div className="row">
@@ -118,8 +91,8 @@ class Showdetails extends Component {
                   }}
                 ></div>
                 <div className="col-md-5">
-                  <div class="card">
-                    <div class="card-header">
+                  <div className="card">
+                    <div className="card-header">
                       <h4>Show Info</h4>
                       <span>
                         <b>Language:</b>
@@ -162,8 +135,6 @@ class Showdetails extends Component {
             </div>
           </div>
         ) : null}
-
-       
       </div>
     );
   }

@@ -1,30 +1,29 @@
 import * as actionType from "./showsDeshboardActionType";
 
 export const getAllShowsDataFail = () => ({
-  type: actionType.RETRIVE_SHOWS_DATA_FAIL
+  type: actionType.RETRIVE_SHOWS_DATA_FAIL,
 });
-export const getAllShowsData = data => ({
+export const getAllShowsData = (data) => ({
   type: actionType.SHOWS_DATA,
-  payload:  [...data ]
+  payload: [...data],
 });
 
 export const getShowsDetailsFail = () => ({
-  type: actionType.SHOW_DETAILS_FAIL
+  type: actionType.SHOW_DETAILS_FAIL,
 });
-export const getShowsDetails = data => ({
+export const getShowsDetails = (data) => ({
   type: actionType.SHOW_DETAILS,
-  payload:  {...data }
+  payload: { ...data },
 });
 
 export const getSearchShowFail = () => ({
-  type: actionType.SEARCH_SHOW_FAIL
+  type: actionType.SEARCH_SHOW_FAIL,
 });
-export const getSearchShow = data => ({
+export const getSearchShow = (data) => ({
   type: actionType.SEARCH_SHOW,
-  payload:  [...data ]
+  payload: [...data],
 });
 
 export const serverError = () => ({
-    type: actionType.SERVER_ERROR
-  });
-
+  type: actionType.SERVER_ERROR,
+});

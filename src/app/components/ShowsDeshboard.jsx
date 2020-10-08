@@ -3,7 +3,6 @@ import Header from "./Header";
 import { connect } from "react-redux";
 import { mapStateToProps } from "../reducers/index";
 import * as middleware from "../action/middleware/showsDeshboardMiddleware";
-import SearchShow from "./SearchShow";
 
 class ShowsDeshboard extends Component {
   constructor(props) {
@@ -44,14 +43,7 @@ class ShowsDeshboard extends Component {
       state.uniqueGenres = uniqueGenres.sort();
       state.allShowsDetails = nextProps.showsDeshboardReducer.showsData;
     }
-
-    if (
-      nextProps &&
-      nextProps.searchShowReducer &&
-      nextProps.searchShowReducer.searchShowDetail
-    ) {
-      state.searchArray = nextProps.searchShowReducer.searchShowDetail;
-    }
+    return {}
   }
 
   componentDidMount() {
@@ -65,100 +57,92 @@ class ShowsDeshboard extends Component {
       });
     }
   };
-  handleButtonClick = (event) => {
-    this.props.dispatch(middleware.getSearchShow(event));
-  };
-  handleHomePage = () => {
-    this.setState({
-      searchArray: "",
-    });
-  };
+
   render() {
-    console.log("gfe", this.state.searchArray);
     return (
       <div>
-        <Header
-          handleClick={(e) => this.handleButtonClick(e)}
-          handleHomePage={this.handleHomePage}
-        />
-        {this.state.searchArray ? (
-          <SearchShow searchResult={this.state.searchArray} />
-        ) : (
-          <div class=" jumbotron">
-            <h5>Top Shows</h5>
-            <div className="live__scroll">
-              <div class="row-sty">
-                {this.state.topShows
-                  ? this.state.topShows.map((val, id) => {
-                      return (
-                        <div className="img-style">
-                          {" "}
-                          <img
-                            key={id}
-                            src={val.image.medium || "N/A"}
-                            alt={id}
-                            onClick={(e) => this.handleShowDetails(e, val.id)}
-                          />
-                          <div>
-                            Rating{" "}
-                            {val.rating && val.rating.average
-                              ? val.rating.average
-                              : "N/A"}
-                          </div>
-                        </div>
-                      );
-                    })
-                  : null}
-              </div>
-            </div>
+        <Header />
 
-            {this.state.uniqueGenres && this.state.allShowsDetails
-              ? this.state.uniqueGenres.map((uniqueGenresVal, id) => {
-                  this.state.uniqueGenresArray = this.state.allShowsDetails.filter(
-                    (d) => d.genres.includes(uniqueGenresVal)
-                  );
-                  this.state.uniqueGenresArray = this.state.uniqueGenresArray.sort(
-                    (a, b) => b.rating.average - a.rating.average
-                  );
-                  return (
-                    <div>
-                      <br /> <br />
-                      <h5>{uniqueGenresVal}</h5>
-                      <div className="live__scroll">
-                        <div class="row-sty">
-                          {this.state.uniqueGenresArray
-                            ? this.state.uniqueGenresArray.map(
-                                (showObj, id) => {
-                                  return (
-                                    <div className="img-style">
-                                      <img
-                                        key={id}
-                                        src={showObj.image.medium || "N/A"}
-                                        alt={id}
-                                        onClick={(e) =>
-                                          this.handleShowDetails(e, showObj.id)
-                                        }
-                                      />
-                                      <div>
-                                        Rating{" "}
-                                        {showObj.rating &&
-                                        showObj.rating.average
-                                          ? showObj.rating.average
-                                          : "N/A"}
-                                      </div>
-                                    </div>
-                                  );
-                                }
-                              )
-                            : null}
+        <div className=" jumbotron">
+          <h5>Top Shows</h5>
+          <div className="live__scroll">
+            <div className="row-sty">
+              {this.state.topShows
+                ? this.state.topShows.map((val, id) => {
+                    return (
+                      <div className="img-style" key={id}>
+                        {" "}
+                        <img
+                          key={id}
+                          src={val.image.medium || "N/A"}
+                          alt={id}
+                          onClick={(e) => this.handleShowDetails(e, val.id)}
+                        />
+                        <div>
+                          Rating{" "}
+                          {val.rating && val.rating.average
+                            ? val.rating.average
+                            : "N/A"}
                         </div>
                       </div>
-                    </div>
-                  );
-                })
-              : null}
+                    );
+                  })
+                : null}
+            </div>
           </div>
-        )}
+
+          {this.state.uniqueGenres && this.state.allShowsDetails
+            ? this.state.uniqueGenres.map((uniqueGenresVal, id) => {
+
+             /*  this.state.uniqueGenresArray = this.state.allShowsDetails.filter(
+                (d) => d.genres.includes(uniqueGenresVal)
+              );
+              this.state.uniqueGenresArray = this.state.uniqueGenresArray.sort(
+                (a, b) => b.rating.average - a.rating.average
+              ); */
+
+                let uniqueGenresTemp = this.state.allShowsDetails.filter((d) =>
+                  d.genres.includes(uniqueGenresVal)
+                );
+
+                uniqueGenresTemp = uniqueGenresTemp.sort(
+                  (a, b) => b.rating.average - a.rating.average
+                );
+                return (
+                  <div id={id}>
+                    <br /> <br />
+                    <h5>{uniqueGenresVal}</h5>
+                    <div className="live__scroll">
+                      <div className="row-sty">
+                        {uniqueGenresTemp
+                          ? uniqueGenresTemp.map((showObj, id) => {
+                              return (
+                                <div className="img-style">
+                                  <img
+                                    key={id}
+                                    src={showObj.image.medium || "N/A"}
+                                    alt={id}
+                                    onClick={(e) =>
+                                      this.handleShowDetails(e, showObj.id)
+                                    }
+                                  />
+                                  <div>
+                                    Rating{" "}
+                                    {showObj.rating && showObj.rating.average
+                                      ? showObj.rating.average
+                                      : "N/A"}
+                                  </div>
+                                </div>
+                              );
+                            })
+                          : null}
+                      </div>
+                    </div>
+                  </div>
+                );
+              })
+            : null}
+        </div>
       </div>
     );
   }

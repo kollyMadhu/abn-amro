@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import "../../styles/styles.css";
+import { withRouter } from "react-router-dom";
 
 class Header extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      searchVal: ""
+      searchVal: "",
     };
   }
 
@@ -15,12 +16,17 @@ class Header extends Component {
     });
   };
   handleClick = () => {
-    this.props.handleClick(this.state.searchVal);
-  }
+    if (this.state.searchVal) {
+      this.props.history.push({
+        pathname: "/SearchShow",
+        search: `?${this.state.searchVal}`,
+      });
+    }
+  };
   handleHomePage = () => {
     this.props.handleHomePage();
-  }
- 
+  };
+
   render() {
     return (
       <nav className="navbar fixed-top navbar-expand-md navbar-dark bg-dark ">
@@ -29,7 +35,7 @@ class Header extends Component {
           <div className="collapse navbar-collapse" id="navbarCollapse">
             <ul className="navbar-nav mr-auto">
               <li className="nav-item active">
-                <a className="nav-link" href="#">
+                <a className="nav-link" href="\">
                   Dashboard
                   <span className="sr-only">(current)</span>
                 </a>
@@ -48,7 +54,7 @@ class Header extends Component {
               <button
                 className="btn btn-outline-success my-2 my-sm-0"
                 type="submit"
-                onClick = {this.handleClick}
+                onClick={this.handleClick}
               >
                 Search
               </button>
@@ -60,4 +66,4 @@ class Header extends Component {
   }
 }
 
-export default Header;
+export default withRouter(Header);

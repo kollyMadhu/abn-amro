@@ -8,37 +8,49 @@ class SearchShow extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      searchResult: this.props.searchResult,
-      genresVal: ''
+      genresVal: "",
+      searchArray: {},
     };
   }
 
   static getDerivedStateFromProps(nextProps, state) {
-    /* let arrayVal = "";
+    if (
+      nextProps &&
+      nextProps.searchShowReducer &&
+      nextProps.searchShowReducer.searchShowDetail
+    ) {
+      state.searchArray = nextProps.searchShowReducer.searchShowDetail;
+    }
+    return {}
+  }
 
-    if (state.searchResult.show.genres) {
-      state.searchResult.show.genres.map(function (val, id) {
-        let arraylength = state.searchResult.show.genres.length;
-        if (arraylength > id + 1) arrayVal = `${arrayVal}${val} | `;
-        else arrayVal = `${arrayVal}${val} `;
-      });
-      state.genresVal = arrayVal;
-    } */
+  componentDidMount() {
+    let searchVal =
+      this.props.history.location &&
+      this.props.history.location.search &&
+      this.props.history.location.search.includes("?")
+        ? this.props.history.location.search.split("?")
+        : null;
+
+    searchVal = searchVal ? searchVal[1] : "";
+    if (searchVal) this.props.dispatch(middleware.getSearchShow(searchVal));
   }
 
   goBack = () => {
-    //this.props.history.goBack()
-    //window.open('/')
-  }
+    this.props.history.goBack();
+  };
 
   render() {
     return (
       <div>
-        <div class="jumbotron">
-        <button onClick={this.goBack}  type="submit">Go Back</button>
-            <br /> <br />
-          {this.state.searchResult.length > 0
-            ? this.state.searchResult.map(function (searchArrayData) {
+        <Header />
+        <div className="jumbotron">
+          <button onClick={this.goBack} type="submit">
+            Go Back
+          </button>
+          <br /> <br />
+          {this.state.searchArray.length > 0
+            ? this.state.searchArray.map(function (searchArrayData) {
                 return (
                   <div className="container">
                     <div className="row">
@@ -61,12 +73,12 @@ class SearchShow extends Component {
                       <div
                         className="col-md-4"
                         dangerouslySetInnerHTML={{
-                          __html: searchArrayData.show.summary || 'N/A',
+                          __html: searchArrayData.show.summary || "N/A",
                         }}
                       ></div>
                       <div className="col-md-5">
-                        <div class="card">
-                          <div class="card-header">
+                        <div className="card">
+                          <div className="card-header">
                             <h4>Show Info</h4>
                             <span>
                               <b>Language:</b>
@@ -98,11 +110,12 @@ class SearchShow extends Component {
                           </div>
                         </div>
                       </div>
-                    </div><br /> <br />
+                    </div>
+                    <br /> <br />
                   </div>
                 );
               })
-            : 'No Search Result Found'}
+            : "No Search Result Found"}
         </div>
       </div>
     );
